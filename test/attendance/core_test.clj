@@ -1,6 +1,6 @@
-(ns attendance-api.core-test
+(ns attendance.core-test
   (:require [clojure.test :refer :all]
-            [attendance-api.core :refer :all]))
+            [attendance.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."
