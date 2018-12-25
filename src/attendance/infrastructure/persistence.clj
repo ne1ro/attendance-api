@@ -1,5 +1,7 @@
 (ns attendance.infrastructure.persistence)
 
-(defn list-attendants [] [{ "first-name" "Vasya" "last-name" "Pupkin" "id" 1}])
+(defn list-attendants []
+  (-> (select :*) (from :attendants)))
 
-(defn get-attendant [id] {:id 1})
+(defn get-attendant [id]
+  (-> (select :*) (from :attendants) (where [:= :attendants.id id]))
