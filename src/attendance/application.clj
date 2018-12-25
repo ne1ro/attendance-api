@@ -1,9 +1,5 @@
 (ns attendance.application
-  (:require [attendance.infrastructure.persistence :as persistence]
-            [honeysql.core :as sql]
-            [honeysql.helpers :refer :all :as helpers]
-            )
-  )
+  (:require [attendance.infrastructure.persistence :as persistence]))
 
 (defn create-attendant [attendant-form] attendant-form)
 
