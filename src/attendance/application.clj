@@ -1,10 +1,12 @@
-(ns attendance.application)
+(ns attendance.application
+  (:require [attendance.infrastructure.persistence :as persistence])
+  )
 
 (defn create-attendant [attendant-form] attendant-form)
 
-(defn list-attendants [] [{ "first-name" "Vasya" "last-name" "Pupkin" "id" 1}])
+(defn list-attendants [] (persistence/list-attendants []))
 
-(defn get-attendant [id] { "id" 1 })
+(defn get-attendant [id] (persistence/get-attendant id))
 
 (defn delete-attendant [attendant] (attendant))
 
