@@ -3,7 +3,7 @@
 
 (defn create-attendant [attendant-form] attendant-form)
 
-(defn list-attendants [] (persistence/list-attendants []))
+(defn list-attendants [] (persistence/list-attendants))
 
 (defn get-attendant [id] (persistence/get-attendant id))
 

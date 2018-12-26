@@ -6,7 +6,6 @@
 (def app
   (api
    (GET "/attendants" []
-     (ok (application/list-attendants))))
-
+     (ok (application/list-attendants)))
    (GET "/attendant/:id" []
-     (ok (application/get-attendant 1))))
+     (ok (application/get-attendant 2)))))

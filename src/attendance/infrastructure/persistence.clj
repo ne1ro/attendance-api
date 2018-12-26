@@ -1,11 +1,15 @@
 (ns attendance.infrastructure.persistence
-  (:require [honeysql.core :as sql]
-           [honeysql.helpers :refer :all :as helpers]))
+  (:refer-clojure :exclude [update])
+  (:require
+   [clojure.java.jdbc :as jdbc]
+   [honeysql.core :as sql]
+   [honeysql.helpers :refer :all :as helpers]))
 
-(def db {:classname   "org.sqlite.JDBC", :subprotocol "sqlite", :subname "attendance.db"})
+(def conn {:classname "org.sqlite.JDBC", :subprotocol "sqlite", :subname "attendance.db"})
 
-(defn list-attendants []
-  (-> (select :*) (from :attendants)))
+(defn- query [q] (-> q sql/format (->> (jdbc/query conn))))
+
+(defn list-attendants [] (-> (select :*) (from :attendants) query))
 
 (defn get-attendant [id]
-  (-> (select :*) (from :attendants) (where [:= :attendants.id id]))
+  (-> (select :*) (from :attendants) (where [:= :attendants.id id]) (limit 1) query))

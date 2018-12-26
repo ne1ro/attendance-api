@@ -17,7 +17,11 @@
                  [prismatic/schema "1.1.9"]]
   :ring  {:handler attendance.core/app :nrepl {:start? true :port 9998}}
   :uberjar-name "attendance.jar"
-  :repl-options {:init-ns attendance.core}
   :profiles {:dev {:plugins [[cider/cider-nrepl "0.18.0"] [lein-autoreload "0.1.1"] [jonase/eastwood "0.3.3"]
-                             [lein-ring "0.12.4"] [lein-cljfmt "0.6.3"]]}}
-  :main attendance.core)
+                             [lein-ring "0.12.4"] [lein-cljfmt "0.6.3"] [mvxcvi/whidbey "2.0.0"]]}}
+  :middleware [whidbey.plugin/repl-pprint]
+  :main attendance.core
+  :repl-options {:init-ns attendance.core
+                 :prompt (fn [ns] (str "\u001B[35m[\u001B[34m" ns "\u001B[35m]\u001B[33mλ:\u001B[m "))
+
+                 :welcome (println "Willkommen!")})
