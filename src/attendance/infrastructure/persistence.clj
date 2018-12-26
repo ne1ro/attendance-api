@@ -12,4 +12,4 @@
 (defn list-attendants [] (-> (select :*) (from :attendants) query))
 
 (defn get-attendant [id]
-  (-> (select :*) (from :attendants) (where [:= :attendants.id id]) (limit 1) query))
+  (-> (select :*) (from :attendants) (where [:= :attendants.id id]) (limit 1) query first))
