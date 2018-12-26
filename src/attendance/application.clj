@@ -1,8 +1,9 @@
 (ns attendance.application
+  (:require [attendance.domain :as domain])
   (:require [attendance.infrastructure.persistence :as persistence]))
 
 (defn create-attendant [attendant-form]
-  (-> attendant-form (persistence/create-attendant))
+  (-> attendant-form (domain/save-attendant) (persistence/create-attendant))
   attendant-form)
 
 (defn list-attendants [] (persistence/list-attendants))

@@ -24,5 +24,4 @@
   :main attendance.core
   :repl-options {:init-ns attendance.core
                  :prompt (fn [ns] (str "\u001B[35m[\u001B[34m" ns "\u001B[35m]\u001B[33mλ:\u001B[m "))
-
-                 :welcome (println "\u001BWillkommen!")})
+                 :welcome ()})

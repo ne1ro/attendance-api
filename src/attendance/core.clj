@@ -16,6 +16,5 @@
      (ok (application/get-attendant id)))
 
    (POST "/attendants" []
-     :return Attendant
      :body [attendant-form Attendant]
      (ok (application/create-attendant attendant-form)))))
