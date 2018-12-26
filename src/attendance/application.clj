@@ -1,7 +1,9 @@
 (ns attendance.application
   (:require [attendance.infrastructure.persistence :as persistence]))
 
-(defn create-attendant [attendant-form] attendant-form)
+(defn create-attendant [attendant-form]
+  (-> attendant-form (persistence/create-attendant))
+  attendant-form)
 
 (defn list-attendants [] (persistence/list-attendants))
 

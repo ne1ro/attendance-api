@@ -1,6 +1,6 @@
 (defproject attendance "0.1.0-SNAPSHOT"
   :description "Attendance API built in Clojure"
-  :url "https://github.com/ne1ro"
+  :url "https://github.com/ne1ro/attendance-api"
   :license {:name "EPL-2.0 OR GPL-2.0-or-later WITH Classpath-exception-2.0"
             :url "https://www.eclipse.org/legal/epl-2.0/"}
   :dependencies [[org.clojure/java.jdbc "0.7.8"]
@@ -17,11 +17,12 @@
                  [prismatic/schema "1.1.9"]]
   :ring  {:handler attendance.core/app :nrepl {:start? true :port 9998}}
   :uberjar-name "attendance.jar"
-  :profiles {:dev {:plugins [[cider/cider-nrepl "0.18.0"] [lein-autoreload "0.1.1"] [jonase/eastwood "0.3.3"]
-                             [lein-ring "0.12.4"] [lein-cljfmt "0.6.3"] [mvxcvi/whidbey "2.0.0"]]}}
+  :profiles {:dev {:plugins [[cider/cider-nrepl "0.18.0"] [lein-autoreload "0.1.1"]
+                             [jonase/eastwood "0.3.3"] [lein-ring "0.12.4"]
+                             [lein-cljfmt "0.6.3"] [mvxcvi/whidbey "2.0.0"]]}}
   :middleware [whidbey.plugin/repl-pprint]
   :main attendance.core
   :repl-options {:init-ns attendance.core
                  :prompt (fn [ns] (str "\u001B[35m[\u001B[34m" ns "\u001B[35m]\u001B[33mλ:\u001B[m "))
 
-                 :welcome (println "Willkommen!")})
+                 :welcome (println "\u001BWillkommen!")})

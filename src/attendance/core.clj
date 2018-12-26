@@ -4,6 +4,8 @@
             [schema.core :as s]
             [ring.util.http-response :refer :all]))
 
+(s/defschema Attendant {:firstName s/Str :lastName s/Str (s/optional-key :id) s/Int})
+
 (def app
   (api
    (GET "/attendants" []
@@ -11,4 +13,9 @@
 
    (GET "/attendants/:id" []
      :path-params [id :- s/Int]
-     (ok (application/get-attendant id)))))
+     (ok (application/get-attendant id)))
+
+   (POST "/attendants" []
+     :return Attendant
+     :body [attendant-form Attendant]
+     (ok (application/create-attendant attendant-form)))))
