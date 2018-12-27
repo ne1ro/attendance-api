@@ -22,5 +22,7 @@
     (assoc attendance :id
            (-> attendance (domain/attend) (persistence/create-attendance)))))
 
+(defn delete-attendance [attendant-id day])
+
 ; Private functions
 ; (defn- )
