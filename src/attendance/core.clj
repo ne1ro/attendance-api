@@ -21,4 +21,7 @@
 
    (DELETE "/attendants/:id" []
      :path-params [id :- s/Int]
-     (ok (application/delete-attendant id)))))
+     (ok (application/delete-attendant id)))
+
+   (GET "/attendancies_days" []
+     (ok (application/list-attendancies-days)))))
