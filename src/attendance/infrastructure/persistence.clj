@@ -8,7 +8,7 @@
 (def conn {:classname "org.sqlite.JDBC" :subprotocol "sqlite" :subname "attendance.db"})
 
 (defn- query [q] (-> q sql/format (->> (jdbc/query conn))))
-(def delete! #(jdbc/delete conn %1 ["id = ?" %2]))
+(def delete! #(jdbc/delete! conn %1 ["id = ?" %2]))
 
 (defn- insert! [table, data]
   "Inserts data and returns ID"
@@ -33,6 +33,12 @@
    query))
 
 (defn get-attendance-by-day [attendant-id day]
-  ())
+  (->
+   (select :*)
+   (from :attendancies)
+   (where [:= :attendancies.attendantId attendant-id] [:= :attendancies.day day])
+   (limit 1)
+   query first))
+
 (defn create-attendance [attendance-form] (insert! :attendancies attendance-form))
-(defn delete-attendance [id] (delete! :attendants id))
+(defn delete-attendance [{id :id}] (delete! :attendancies id))

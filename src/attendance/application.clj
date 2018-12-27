@@ -17,12 +17,13 @@
 
 (defn list-attendancies-days [] (map :day (persistence/list-attendancies-days)))
 
-(defn create-attendance [attendant-id attendance-form]
+(defn attend [attendant-id attendance-form]
   (let [attendance (assoc attendance-form :attendantId attendant-id)]
     (assoc attendance :id
            (-> attendance (domain/attend) (persistence/create-attendance)))))
 
-(defn delete-attendance [attendant-id day])
+(defn unattend [attendant-id day]
+  (-> attendant-id (persistence/get-attendance-by-day day) (persistence/delete-attendance)))
 
 ; Private functions
 ; (defn- )

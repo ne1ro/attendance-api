@@ -31,4 +31,8 @@
      :path-params [attendantId :- s/Int]
      :body [attendance-form Attendance]
      (created "/attendants/:id/attendances"
-              (application/create-attendance attendantId attendance-form)))))
+              (application/attend attendantId attendance-form)))
+
+   (DELETE "/attendants/:attendantId/attendancies/:day" []
+     :path-params [attendantId :- s/Int day :- s/Str]
+     (ok (application/unattend attendantId day)))))
