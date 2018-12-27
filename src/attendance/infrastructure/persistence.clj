@@ -29,3 +29,5 @@
    (from :attendancies)
    (order-by [:day :desc])
    query))
+
+(defn create-attendance [attendance-form] (insert! :attendancies attendance-form))

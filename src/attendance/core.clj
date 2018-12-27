@@ -4,7 +4,8 @@
             [schema.core :as s]
             [ring.util.http-response :refer :all]))
 
-(s/defschema Attendant {:firstName s/Str :lastName s/Str (s/optional-key :id) s/Int})
+(s/defschema Attendant {:firstName s/Str :lastName s/Str})
+(s/defschema Attendance {:day s/Str :status s/Bool})
 
 (def app
   (api
@@ -24,4 +25,10 @@
      (ok (application/delete-attendant id)))
 
    (GET "/attendancies_days" []
-     (ok (application/list-attendancies-days)))))
+     (ok (application/list-attendancies-days)))
+
+   (POST "/attendants/:attendantId/attendancies" []
+     :path-params [attendantId :- s/Int]
+     :body [attendance-form Attendance]
+     (created "/attendants/:id/attendances"
+              (application/create-attendance attendantId attendance-form)))))
