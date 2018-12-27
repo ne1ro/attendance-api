@@ -3,8 +3,11 @@
   (:require [attendance.infrastructure.persistence :as persistence]))
 
 (defn create-attendant [attendant-form]
-  (-> attendant-form (domain/save-attendant) (persistence/create-attendant))
-  attendant-form)
+  (->
+    attendant-form
+    (domain/save-attendant)
+    (persistence/create-attendant)
+    (->> (assoc attendant-form :id))))
 
 (defn list-attendants [] (persistence/list-attendants))
 
