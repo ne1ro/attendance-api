@@ -16,3 +16,5 @@
 
 (defn create-attendant [attendant-form]
   (-> conn (jdbc/insert! :attendants attendant-form) first vals first))
+
+(defn delete-attendant [id] (jdbc/delete! conn :attendants ["id = ?" id]))

@@ -17,4 +17,8 @@
 
    (POST "/attendants" []
      :body [attendant-form Attendant]
-     (ok (application/create-attendant attendant-form)))))
+     (created "/attendants" (application/create-attendant attendant-form)))
+
+   (DELETE "/attendants/:id" []
+     :path-params [id :- s/Int]
+     (ok (application/delete-attendant id)))))

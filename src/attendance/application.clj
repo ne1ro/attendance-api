@@ -13,7 +13,8 @@
 
 (defn get-attendant [id] (persistence/get-attendant id))
 
-(defn delete-attendant [attendant] (attendant))
+(defn delete-attendant [id]
+  (let [attendant (get-attendant id)] (persistence/delete-attendant id) attendant))
 
 ; Private functions
 ; (defn- )
