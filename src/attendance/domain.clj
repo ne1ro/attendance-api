@@ -1,6 +1,9 @@
 (ns attendance.domain (:require [schema.core :as s]))
 
-(s/defschema AttendanceForm
-  {:firstName s/Str :lastName s/Str})
+(def day #"(\d{4})-(\d{2})-(\d{2})")
 
-(defn save-attendant [attendance-form]  (s/validate AttendanceForm attendance-form))
+(s/defschema Attendant {:firstName s/Str :lastName s/Str})
+(s/defschema Attendance {:day day :attendantId s/Int :status s/Bool})
+
+(defn save-attendant [attendant-form] (s/validate Attendant attendant-form))
+(defn attend [attendance-form] (s/validate Attendance attendance-form))

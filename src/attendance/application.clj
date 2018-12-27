@@ -19,7 +19,8 @@
 
 (defn create-attendance [attendant-id attendance-form]
   (let [attendance (assoc attendance-form :attendantId attendant-id)]
-    (assoc attendance :id (persistence/create-attendance attendance))))
+    (assoc attendance :id
+           (-> attendance (domain/attend) (persistence/create-attendance)))))
 
 ; Private functions
 ; (defn- )
