@@ -37,6 +37,13 @@
    (order-by [:day :desc])
    query))
 
+(defn list-attendancies-by-attendant [id]
+  (->
+   (select :*)
+   (from :attendancies)
+   (where [:and [:= :attendancies.attendantId id] [:= :attendancies.status true]])
+   query))
+
 (defn list-attendancies [day]
   (->
    (select :attendants.* :attendancies.status)
