@@ -23,7 +23,8 @@
            (-> attendance (domain/attend) (persistence/create-attendance)))))
 
 (defn unattend [attendant-id day]
-  (-> attendant-id (persistence/get-attendance-by-day day) (persistence/delete-attendance)))
+  (let [attendance (persistence/get-attendance-by-day attendant-id day)]
+    (persistence/delete-attendance attendance) attendance))
 
 ; Private functions
 ; (defn- )
