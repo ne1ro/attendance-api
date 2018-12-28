@@ -18,7 +18,7 @@
   :ring  {:handler attendance.core/app :nrepl {:start? true :port 9998}}
   :uberjar-name "attendance.jar"
   :profiles {:dev {:plugins [[cider/cider-nrepl "0.18.0"] [lein-autoreload "0.1.1"]
-                             [jonase/eastwood "0.3.3"] [lein-ring "0.12.4"]
+                             [jonase/eastwood "0.3.3"] [lein-ring "0.12.4"] [lein-kibit "0.1.6"]
                              [lein-cljfmt "0.6.3"] [mvxcvi/whidbey "2.0.0"]]}}
   :middleware [whidbey.plugin/repl-pprint]
   :main attendance.core
