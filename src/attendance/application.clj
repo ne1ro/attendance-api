@@ -9,6 +9,7 @@
    (persistence/create-attendant)
    (->> (assoc attendant-form :id))))
 
+(def list-attendancies persistence/list-attendancies)
 (def list-attendants persistence/list-attendants)
 (def get-attendant persistence/get-attendant)
 

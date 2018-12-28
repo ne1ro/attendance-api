@@ -15,7 +15,7 @@
   (-> conn (jdbc/insert! table data) first vals first))
 
 (defn list-attendants []
-  (-> (select :*) (from :attendants) (order-by [:lastName :desc]) query))
+  (-> (select :*) (from :attendants) (order-by [:lastName :asc]) query))
 
 (defn get-attendant [id]
   (-> (select :*) (from :attendants) (where [:= :attendants.id id]) (limit 1) query first))
@@ -30,6 +30,17 @@
    (modifiers :distinct)
    (from :attendancies)
    (order-by [:day :desc])
+   query))
+
+(defn list-attendancies [day]
+  (->
+   (select :attendants.* :attendancies.status)
+   (from :attendants)
+   (left-join :attendancies
+              [:and
+               [:= :attendancies.attendantId :attendants.id]
+               [:= :attendancies.day day]])
+   (order-by [:attendants.lastName :asc])
    query))
 
 (defn get-attendance-by-day [attendant-id day]

@@ -27,6 +27,10 @@
    (GET "/attendancies_days" []
      (ok (application/list-attendancies-days)))
 
+   (GET "/attendancies/:day" []
+     :path-params [day :- s/Str]
+     (ok (application/list-attendancies day)))
+
    (POST "/attendants/:attendantId/attendancies" []
      :path-params [attendantId :- s/Int]
      :body [attendance-form Attendance]
