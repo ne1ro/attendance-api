@@ -2,6 +2,12 @@
   (:require [attendance.domain :as domain])
   (:require [attendance.infrastructure.persistence :as persistence]))
 
+(defn- set-status [attendance]
+  (assoc attendance :status (case (:status attendance)
+                              1 "attended"
+                              0 "excused"
+                              "unattended")))
+
 (defn create-attendant [attendant-form]
   (->
    attendant-form
@@ -9,7 +15,7 @@
    (persistence/create-attendant)
    (->> (assoc attendant-form :id))))
 
-(def list-attendancies persistence/list-attendancies)
+(defn list-attendancies [day] (map set-status (persistence/list-attendancies day)))
 (def list-attendants persistence/list-attendants)
 (def get-attendant persistence/get-attendant)
 
@@ -26,6 +32,3 @@
 (defn unattend [attendant-id day]
   (let [attendance (persistence/get-attendance-by-day attendant-id day)]
     (persistence/delete-attendance attendance) attendance))
-
-; Private functions
-; (defn- )
