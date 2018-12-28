@@ -18,7 +18,12 @@
   (-> (select :*) (from :attendants) (order-by [:lastName :asc]) query))
 
 (defn get-attendant [id]
-  (-> (select :*) (from :attendants) (where [:= :attendants.id id]) (limit 1) query first))
+  (->
+   (select :attendants.* :attendancies.day)
+   (from :attendants)
+   (left-join :attendancies [:= :attendancies.attendantId :attendants.id])
+   (where [:= :attendants.id id])
+   query first))
 
 (defn create-attendant [attendant-form] (insert! :attendants attendant-form))
 
