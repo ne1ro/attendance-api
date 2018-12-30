@@ -7,22 +7,20 @@
                  [org.xerial/sqlite-jdbc "3.25.2"]
                  [org.clojure/tools.namespace "0.2.11"]
                  [org.flatland/ordered "1.5.7"]
-                 [funcool/cats "2.3.2"]
                  [honeysql "0.9.4"]
                  [metosin/compojure-api "1.1.11"]
                  [mount "0.1.15"]
                  [org.clojure/clojure "1.10.0"]
-                 [org.clojure/core.match "0.3.0-alpha5"]
-                 [cljfmt "0.5.1"]
                  [prismatic/schema "1.1.9"]]
   :ring  {:handler attendance.core/app :nrepl {:start? true :port 9998}}
   :uberjar-name "attendance.jar"
   :profiles {:dev {:resource-paths ["src" "config/dev"]
+                   :dependencies [[cljfmt "0.5.1"]]
                    :plugins [[cider/cider-nrepl "0.18.0"] [lein-autoreload "0.1.1"]
                              [jonase/eastwood "0.3.3"] [lein-ring "0.12.4"] [lein-kibit "0.1.6"]
                              [lein-cljfmt "0.6.3"] [mvxcvi/whidbey "2.0.0"]]}
-             {:test {:resource-paths ["src" "config/test"]}}
-             }
+             :test {:dependencies [[eftest "0.5.4"]]
+                    :resource-paths ["src" "config/test"] :plugins [[lein-eftest "0.5.4"]]}}
   :middleware [whidbey.plugin/repl-pprint]
   :main attendance.core
   :repl-options {:init-ns attendance.core
