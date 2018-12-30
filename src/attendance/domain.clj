@@ -1,4 +1,5 @@
-(ns attendance.domain (:require [schema.core :as s]))
+(ns attendance.domain
+  (:require [schema.core :as s]))
 
 (def day #"(\d{4})-(\d{2})-(\d{2})")
 

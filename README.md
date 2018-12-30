@@ -1,14 +1,16 @@
 # attendance-api
 
-A Clojure library designed to ... well, that part is up to you.
+API to create attendants and attendances build in Clojure.
 
 ## Usage
 
-FIXME
+```clojure
+lein install && lein ring server 3000
+```
 
 ## License
 
-Copyright © 2018 FIXME
+neiro © 2018-2019
 
 This program and the accompanying materials are made available under the
 terms of the Eclipse Public License 2.0 which is available at
