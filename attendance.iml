@@ -9,6 +9,7 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/resources" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/dev-resources" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/config/test" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
     </content>
@@ -36,6 +37,8 @@
     <orderEntry type="library" name="Leiningen: com.github.fge/json-schema-validator:2.2.6" level="project" />
     <orderEntry type="library" name="Leiningen: com.github.fge/msg-simple:1.1" level="project" />
     <orderEntry type="library" name="Leiningen: com.github.fge/uri-template:0.9" level="project" />
+    <orderEntry type="library" name="Leiningen: com.github.javafaker/javafaker:0.16" level="project" />
+    <orderEntry type="library" name="Leiningen: com.github.mifmif/generex:1.0.2" level="project" />
     <orderEntry type="library" name="Leiningen: com.google.code.findbugs/jsr305:3.0.0" level="project" />
     <orderEntry type="library" name="Leiningen: com.google.guava/guava:16.0.1" level="project" />
     <orderEntry type="library" name="Leiningen: com.google.javascript/closure-compiler:v20151216" level="project" />
@@ -49,9 +52,13 @@
     <orderEntry type="library" name="Leiningen: crypto-equality:1.0.0" level="project" />
     <orderEntry type="library" name="Leiningen: crypto-random:1.2.0" level="project" />
     <orderEntry type="library" name="Leiningen: de.kotka/lazymap:3.1.0" level="project" />
+    <orderEntry type="library" name="Leiningen: dk.brics.automaton/automaton:1.11-8" level="project" />
+    <orderEntry type="library" name="Leiningen: eftest:0.5.4" level="project" />
+    <orderEntry type="library" name="Leiningen: fipp:0.6.13" level="project" />
     <orderEntry type="library" name="Leiningen: frankiesardo/linked:1.2.9" level="project" />
     <orderEntry type="library" name="Leiningen: honeysql:0.9.4" level="project" />
     <orderEntry type="library" name="Leiningen: instaparse:1.4.0" level="project" />
+    <orderEntry type="library" name="Leiningen: io.aviso/pretty:0.1.34" level="project" />
     <orderEntry type="library" name="Leiningen: javax.activation/activation:1.1" level="project" />
     <orderEntry type="library" name="Leiningen: javax.mail/mailapi:1.4.3" level="project" />
     <orderEntry type="library" name="Leiningen: joda-time:2.9.7" level="project" />
@@ -63,13 +70,17 @@
     <orderEntry type="library" name="Leiningen: metosin/schema-tools:0.9.0" level="project" />
     <orderEntry type="library" name="Leiningen: metosin/scjsv:0.4.0" level="project" />
     <orderEntry type="library" name="Leiningen: mount:0.1.15" level="project" />
+    <orderEntry type="library" name="Leiningen: mvxcvi/arrangement:1.1.1" level="project" />
+    <orderEntry type="library" name="Leiningen: mvxcvi/puget:1.0.3" level="project" />
     <orderEntry type="library" name="Leiningen: net.cgrand/macrovich:0.2.1" level="project" />
     <orderEntry type="library" name="Leiningen: net.sf.jopt-simple/jopt-simple:4.6" level="project" />
     <orderEntry type="library" name="Leiningen: nrepl:0.4.4" level="project" />
+    <orderEntry type="library" name="Leiningen: org.apache.commons/commons-lang3:3.5" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/clojure:1.10.0" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/clojurescript:1.7.228" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/core.cache:0.6.5" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/core.memoize:0.5.9" level="project" />
+    <orderEntry type="library" name="Leiningen: org.clojure/core.rrb-vector:0.0.13" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/core.specs.alpha:0.2.44" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/data.json:0.2.6" level="project" />
     <orderEntry type="library" name="Leiningen: org.clojure/data.priority-map:0.0.7" level="project" />
@@ -90,9 +101,11 @@
     <orderEntry type="library" name="Leiningen: org.tobereplaced/lettercase:1.0.0" level="project" />
     <orderEntry type="library" name="Leiningen: org.xerial/sqlite-jdbc:3.25.2" level="project" />
     <orderEntry type="library" name="Leiningen: org.yaml/snakeyaml:1.13" level="project" />
+    <orderEntry type="library" name="Leiningen: org.yaml/snakeyaml:1.20:android" level="project" />
     <orderEntry type="library" name="Leiningen: potemkin:0.4.3" level="project" />
     <orderEntry type="library" name="Leiningen: prismatic/plumbing:0.5.4" level="project" />
     <orderEntry type="library" name="Leiningen: prismatic/schema:1.1.9" level="project" />
+    <orderEntry type="library" name="Leiningen: progrock:0.1.2" level="project" />
     <orderEntry type="library" name="Leiningen: rewrite-clj:0.4.12" level="project" />
     <orderEntry type="library" name="Leiningen: rewrite-cljs:0.4.1" level="project" />
     <orderEntry type="library" name="Leiningen: riddley:0.1.12" level="project" />
