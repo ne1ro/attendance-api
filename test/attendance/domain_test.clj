@@ -6,7 +6,7 @@
 (def faker (Faker.))
 (def valid-attendance {:day "2018-12-12" :status true :attendantId 0})
 (def valid-attendant
-  {:firstName (-> faker .name .firstName) :lastName (-> faker .name .lastName)})
+  {:firstName (-> faker .witcher .monster) :lastName (-> faker .witcher .school)})
 
 (deftest attend-test
   (is (thrown? Exception (attend {})))
