@@ -1,6 +1,6 @@
 (ns attendance.application
   (:require [attendance.domain :as domain])
-  (:require [attendance.infrastructure.persistence :as persistence]))
+  (:require [attendance.infrastructure.persistence-sqlite :as persistence]))
 
 (defn- set-status [attendance]
   (assoc attendance :status (case (:status attendance)
