@@ -22,7 +22,7 @@
                                      [lein-cljfmt "0.6.3"] [mvxcvi/whidbey "2.0.0"]]}
              :test {:dependencies   [[eftest "0.5.4"]]
                     :resource-paths ["src" "config/test"]
-                    :plugins        [[lein-eftest "0.5.4"]]}}
+                    :plugins        [[lein-eftest "0.5.4"] [lein-cloverage "1.0.3"]]}}
   :middleware [whidbey.plugin/repl-pprint]
   :main attendance.core
   :repl-options {:init-ns attendance.core
