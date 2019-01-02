@@ -8,44 +8,45 @@
 
 ; (def conn {:classname "org.sqlite.JDBC" :subprotocol "sqlite" :subname "attendance.db"})
 
-(defn- query [conn q] (-> q sql/format (->> (jdbc/query conn))))
+(defn- query [q conn] (-> q sql/format (->> (jdbc/query conn))))
 (defn- delete! [conn table id] (jdbc/delete! conn table ["id = ?" id]))
 (defn- insert! [conn table data]
   "Inserts data and returns ID"
   (-> conn (jdbc/insert! table data) first vals first))
 
 (defrecord PersistenceSQLite [conn] Persistence
-  (list-attendants [this]
-    (-> (select :*) (from :attendants) (order-by [:lastName :asc]) query))
+  (list-attendants [conn]
+    (-> (select :*) (from :attendants) (order-by [:lastName :asc]) (query conn)))
 
-  (get-attendant [this id]
+  (get-attendant [conn id]
     (->
       (select :attendants.* :attendancies.day)
       (from :attendants)
       (left-join :attendancies [:= :attendancies.attendantId :attendants.id])
       (where [:= :attendants.id id])
-      query first))
+      (query conn)
+      first))
 
-  (create-attendant [this attendant-form] (insert! :attendants attendant-form))
+  (create-attendant [conn attendant-form] (insert! conn :attendants attendant-form))
 
-  (delete-attendant [this id] (delete! :attendants id))
+  (delete-attendant [conn id] (delete! conn :attendants id))
 
-  (list-attendances-days [this]
+  (list-attendances-days [conn]
     (->
       (select :day)
       (modifiers :distinct)
       (from :attendancies)
       (order-by [:day :desc])
-      query))
+      (query conn)))
 
-  (list-attendances-by-attendant [this id]
+  (list-attendances-by-attendant [conn id]
     (->
       (select :*)
       (from :attendancies)
       (where [:and [:= :attendancies.attendantId id] [:= :attendancies.status true]])
-      query))
+      (query conn)))
 
-  (list-attendances [this day]
+  (list-attendances [conn day]
     (->
       (select :attendants.* :attendancies.status)
       (from :attendants)
@@ -54,15 +55,16 @@
                   [:= :attendancies.attendantId :attendants.id]
                   [:= :attendancies.day day]])
       (order-by [:attendants.lastName :asc])
-      query))
+      (query conn)))
 
-  (get-attendance-by-day [this attendant-id day]
+  (get-attendance-by-day [conn attendant-id day]
     (->
       (select :*)
       (from :attendancies)
       (where [:= :attendancies.attendantId attendant-id] [:= :attendancies.day day])
       (limit 1)
-      query first))
+      (query conn)
+      first)
 
-  (create-attendance [this attendance-form] (insert! :attendancies attendance-form)))
-(defn delete-attendance [this {id :id}] (delete! :attendancies id))
+    (create-attendance [conn attendance-form] (insert! conn :attendancies attendance-form)))
+  (delete-attendance [conn {id :id}] (delete! conn :attendancies id)))
