@@ -6,8 +6,6 @@
     [honeysql.core :as sql]
     [honeysql.helpers :refer :all :as helpers]))
 
-; (def conn {:classname "org.sqlite.JDBC" :subprotocol "sqlite" :subname "attendance.db"})
-
 (defn- query [q conn] (-> q sql/format (->> (jdbc/query conn))))
 (defn- delete! [conn table id] (jdbc/delete! conn table ["id = ?" id]))
 (defn- insert! [conn table data]
