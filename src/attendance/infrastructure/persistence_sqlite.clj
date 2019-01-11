@@ -6,11 +6,13 @@
    [honeysql.core :as sql]
    [honeysql.helpers :refer :all :as helpers]))
 
-(defn- query [q conn] (-> q sql/format (->> (jdbc/query conn))))
-(defn- delete! [conn table id] (jdbc/delete! conn table ["id = ?" id]))
+(defn- query [q conn] (-> q sql/format (->> (jdbc/query (:conn conn)))))
+
+(defn- delete! [conn table id] (jdbc/delete! (:conn conn) table ["id = ?" id]))
+
 (defn- insert! [conn table data]
   "Inserts data and returns ID"
-  (-> conn (jdbc/insert! table data) first vals first))
+  (-> conn :conn (jdbc/insert! table data) first vals first))
 
 (defrecord PersistenceSQLite [conn]
   Persistence
