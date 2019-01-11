@@ -1,6 +1,6 @@
 (ns attendance.application
-  (:require [attendance.domain :as domain])
-  (:require [attendance.infrastructure.persistence-sqlite :as persistence]))
+  (:require [attendance.domain :as domain]
+            [attendance.infrastructure.persistence-sqlite :as persistence]))
 
 (defn- set-status [attendance]
   (assoc attendance :status (case (:status attendance)
@@ -12,10 +12,10 @@
 
 (defn create-attendant [attendant-form]
   (->
-    attendant-form
-    (domain/save-attendant)
-    (persistence/create-attendant)
-    (->> (assoc attendant-form :id))))
+   attendant-form
+   (domain/save-attendant)
+   (persistence/create-attendant)
+   (->> (assoc attendant-form :id))))
 
 (defn list-attendances [day] (map set-status (persistence/list-attendances day)))
 
@@ -35,7 +35,7 @@
 (defn attend [attendant-id attendance-form]
   (let [attendance (assoc attendance-form :attendantId attendant-id)]
     (assoc attendance :id
-                      (-> attendance (domain/attend) (persistence/create-attendance)))))
+           (-> attendance (domain/attend) (persistence/create-attendance)))))
 
 (defn unattend [attendant-id day]
   (let [attendance (persistence/get-attendance-by-day attendant-id day)]

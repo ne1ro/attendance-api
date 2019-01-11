@@ -25,6 +25,7 @@
                     :plugins        [[lein-eftest "0.5.4"] [lein-cloverage "1.0.3"]]}}
   :middleware [whidbey.plugin/repl-pprint]
   :main attendance.core
+  :aot [attendance.core]
   :repl-options {:init-ns attendance.core
                  :prompt  (fn [ns] (str "\u001B[35m[\u001B[34m" ns "\u001B[35m]\u001B[33mλ:\u001B[m "))
                  :welcome ()})

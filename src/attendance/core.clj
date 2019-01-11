@@ -9,34 +9,34 @@
 
 (def app
   (api
-    (GET "/attendants" []
-      (ok (application/list-attendants)))
+   (GET "/attendants" []
+     (ok (application/list-attendants)))
 
-    (GET "/attendants/:id" []
-      :path-params [id :- s/Int]
-      (ok (application/get-attendant id)))
+   (GET "/attendants/:id" []
+     :path-params [id :- s/Int]
+     (ok (application/get-attendant id)))
 
-    (POST "/attendants" []
-      :body [attendant-form Attendant]
-      (created "/attendants" (application/create-attendant attendant-form)))
+   (POST "/attendants" []
+     :body [attendant-form Attendant]
+     (created "/attendants" (application/create-attendant attendant-form)))
 
-    (DELETE "/attendants/:id" []
-      :path-params [id :- s/Int]
-      (ok (application/delete-attendant id)))
+   (DELETE "/attendants/:id" []
+     :path-params [id :- s/Int]
+     (ok (application/delete-attendant id)))
 
-    (GET "/attendances_days" []
-      (ok (application/list-attendances-days)))
+   (GET "/attendances_days" []
+     (ok (application/list-attendances-days)))
 
-    (GET "/attendances/:day" []
-      :path-params [day :- s/Str]
-      (ok (application/list-attendances day)))
+   (GET "/attendances/:day" []
+     :path-params [day :- s/Str]
+     (ok (application/list-attendances day)))
 
-    (POST "/attendants/:attendantId/attendances" []
-      :path-params [attendantId :- s/Int]
-      :body [attendance-form Attendance]
-      (created "/attendants/:id/attendances"
-               (application/attend attendantId attendance-form)))
+   (POST "/attendants/:attendantId/attendances" []
+     :path-params [attendantId :- s/Int]
+     :body [attendance-form Attendance]
+     (created "/attendants/:id/attendances"
+              (application/attend attendantId attendance-form)))
 
-    (DELETE "/attendants/:attendantId/attendances/:day" []
-      :path-params [attendantId :- s/Int day :- s/Str]
-      (ok (application/unattend attendantId day)))))
+   (DELETE "/attendants/:attendantId/attendances/:day" []
+     :path-params [attendantId :- s/Int day :- s/Str]
+     (ok (application/unattend attendantId day)))))
