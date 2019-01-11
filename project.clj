@@ -15,7 +15,12 @@
                  [prismatic/schema "1.1.9"]]
   :ring {:handler attendance.core/app :nrepl {:start? true :port 9998}}
   :uberjar-name "attendance.jar"
-  :profiles {:test {:dependencies   [[eftest "0.5.4"]]
+  :profiles {:dev  {:resource-paths ["src" "config/dev"]
+                    :dependencies   [[cljfmt "0.5.1"]]
+                    :plugins        [[cider/cider-nrepl "0.18.0"] [lein-kibit "0.1.6"]
+                                     [jonase/eastwood "0.3.3"] [lein-ring "0.12.4"]
+                                     [lein-cljfmt "0.6.3"] [mvxcvi/whidbey "2.0.0"]]}
+             :test {:dependencies   [[eftest "0.5.4"]]
                     :resource-paths ["src" "config/test"]
                     :plugins        [[lein-eftest "0.5.4"] [lein-cloverage "1.0.3"]]}}
   :middleware [whidbey.plugin/repl-pprint]
