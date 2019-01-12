@@ -7,12 +7,12 @@
                  [environ "1.1.0"]
                  [honeysql "0.9.4"]
                  [metosin/compojure-api "1.1.11"]
-                 [mount "0.1.15"]
                  [org.clojure/clojure "1.10.0"]
                  [org.clojure/java.jdbc "0.7.8"]
                  [org.clojure/tools.namespace "0.2.11"]
                  [org.flatland/ordered "1.5.7"]
                  [org.xerial/sqlite-jdbc "3.25.2"]
+                 [ring/ring-jetty-adapter "1.7.1"]
                  [prismatic/schema "1.1.9"]]
   :ring {:handler attendance.core/app :nrepl {:start? true :port 9998}}
   :uberjar-name "attendance.jar"
