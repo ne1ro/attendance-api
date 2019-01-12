@@ -3,6 +3,7 @@
    [environ.core :refer [env]]
    [attendance.domain :as domain]
    [attendance.application.persistence :as p]
+   [camel-snake-kebab.core :refer :all]
    [attendance.infrastructure.persistence-sqlite :refer [->PersistenceSQLite]]))
 
 ; (env :db-name)
@@ -10,7 +11,7 @@
   (->PersistenceSQLite {:classname "org.sqlite.JDBC" :subprotocol "sqlite" :subname "attendance.db"}))
 
 (defn- set-status [attendance]
-  (assoc attendance :status (case (:status attendance)
+  (assoc :attendance :status (case (:status attendance)
                               1 "attended"
                               0 "excused"
                               "unattended")))
@@ -41,7 +42,7 @@
   (let [attendant (get-attendant conn id)] (p/delete-attendant conn id) attendant))
 
 (defn attend [attendant-id attendance-form]
-  (let [attendance (assoc attendance-form :attendantId attendant-id)]
+  (let [attendance (assoc attendance-form :attendant-id attendant-id)]
     (assoc attendance :id
            (-> attendance domain/attend (p/create-attendance conn)))))
 

@@ -2,29 +2,33 @@
   (:refer-clojure :exclude [update])
   (:require
    [attendance.application.persistence :refer [Persistence]]
+   [camel-snake-kebab.core :refer :all]
    [clojure.java.jdbc :as jdbc]
+   [clojure.string :as str]
    [honeysql.core :as sql]
    [honeysql.helpers :refer :all :as helpers]))
 
-(defn- query [q conn] (-> q sql/format (->> (jdbc/query (:conn conn)))))
+(defn- query [q conn]
+  (-> conn :conn (jdbc/query (sql/format q))))
 
-(defn- delete! [conn table id] (jdbc/delete! (:conn conn) table ["id = ?" id]))
+(defn- delete! [conn table id]
+  (jdbc/delete! (:conn conn) table ["id = ?" id]))
 
 (defn- insert! [conn table data]
   "Inserts data and returns ID"
-  (-> conn :conn (jdbc/insert! table data) first vals first))
+  (-> conn :conn (jdbc/insert! table data :row-fn ->kebab-case-keyword) first vals first))
 
 (defrecord PersistenceSQLite [conn]
   Persistence
 
   (list-attendants [conn]
-    (-> (select :*) (from :attendants) (order-by [:lastName :asc]) (query conn)))
+    (-> (select :*) (from :attendants) (order-by [:last-name :asc]) (query conn)))
 
   (get-attendant [conn id]
     (->
      (select :attendants.* :attendancies.day)
      (from :attendants)
-     (left-join :attendancies [:= :attendancies.attendantId :attendants.id])
+     (left-join :attendancies [:= :attendancies.attendant-id :attendants.id])
      (where [:= :attendants.id id])
      (query conn)
      first))
@@ -45,7 +49,7 @@
     (->
      (select :*)
      (from :attendancies)
-     (where [:and [:= :attendancies.attendantId id] [:= :attendancies.status true]])
+     (where [:and [:= :attendancies.attendant-id id] [:= :attendancies.status true]])
      (query conn)))
 
   (list-attendances [conn day]
@@ -54,16 +58,16 @@
      (from :attendants)
      (left-join :attendancies
                 [:and
-                 [:= :attendancies.attendantId :attendants.id]
+                 [:= :attendancies.attendant-id :attendants.id]
                  [:= :attendancies.day day]])
-     (order-by [:attendants.lastName :asc])
+     (order-by [:attendants.last-name :asc])
      (query conn)))
 
   (get-attendance-by-day [conn attendant-id day]
     (->
      (select :*)
      (from :attendancies)
-     (where [:= :attendancies.attendantId attendant-id] [:= :attendancies.day day])
+     (where [:= :attendancies.attendant-id attendant-id] [:= :attendancies.day day])
      (limit 1)
      (query conn)
      first))

@@ -4,9 +4,9 @@
   (:import (com.github.javafaker Faker)))
 
 (def faker (Faker.))
-(def valid-attendance {:day "2018-12-12" :status true :attendantId 0})
+(def valid-attendance {:day "2018-12-12" :status true :attendant-id 0})
 (def valid-attendant
-  {:firstName (-> faker .witcher .monster) :lastName (-> faker .witcher .school)})
+  {:first-name (-> faker .witcher .monster) :last-name (-> faker .witcher .school)})
 
 (deftest attend-test
   (is (thrown? Exception (attend {})))
@@ -16,5 +16,5 @@
 (deftest save-attend-test
   (is (thrown? Exception (save-attendant nil)))
   (is (thrown? Exception (save-attendant {})))
-  (is (thrown? Exception (save-attendant {:firstName nil :lastName nil})))
-  (is (= (:firstName valid-attendant) (-> valid-attendant save-attendant :firstName))))
+  (is (thrown? Exception (save-attendant {:first-name nil :last-name nil})))
+  (is (= (:first-name valid-attendant) (-> valid-attendant save-attendant :firstName))))

@@ -1,14 +1,24 @@
 (ns attendance.core
   (:require [compojure.api.sweet :refer :all]
             [attendance.application :as application]
+            [camel-snake-kebab.core :refer :all]
             [schema.core :as s]
             [ring.util.http-response :refer :all]))
 
-(s/defschema Attendant {:firstName s/Str :lastName s/Str})
+; TODO: replace with clojure.spec?
 (s/defschema Attendance {:day s/Str :status s/Bool})
+(s/defschema Attendant {:first-name s/Str :last-name s/Str})
+
+(defn- key-json->clj [x] (->kebab-case (if (keyword? x) (name x) x)))
+
+(defn- key-clj->json [x] (->camelCase (if (keyword? x) (name x) x)))
 
 (def app
   (api
+     {:format {:formats [:json]
+            :params-opts {:json {:key-fn key-json->clj}}
+            :response-opts {:json {:key-fn key-clj->json}}}}
+
    (GET "/attendants" []
      (ok (application/list-attendants)))
 
@@ -31,12 +41,12 @@
      :path-params [day :- s/Str]
      (ok (application/list-attendances day)))
 
-   (POST "/attendants/:attendantId/attendances" []
-     :path-params [attendantId :- s/Int]
+   (POST "/attendants/:attendant-id/attendances" []
+     :path-params [attendant-id :- s/Int]
      :body [attendance-form Attendance]
      (created "/attendants/:id/attendances"
-              (application/attend attendantId attendance-form)))
+              (application/attend attendant-id attendance-form)))
 
-   (DELETE "/attendants/:attendantId/attendances/:day" []
-     :path-params [attendantId :- s/Int day :- s/Str]
-     (ok (application/unattend attendantId day)))))
+   (DELETE "/attendants/:attendant-id/attendances/:day" []
+     :path-params [attendant-id :- s/Int day :- s/Str]
+     (ok (application/unattend attendant-id day)))))
