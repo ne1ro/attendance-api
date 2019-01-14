@@ -19,9 +19,6 @@
             :params-opts {:json {:key-fn key-json->clj}}
             :response-opts {:json {:key-fn key-clj->json}}}}
 
-   (GET "/attendants" []
-     (ok (application/list-attendants)))
-
    (GET "/attendants/:id" []
      :path-params [id :- s/Int]
      (ok (application/get-attendant id)))

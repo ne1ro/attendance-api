@@ -27,8 +27,6 @@
 
 (defn list-attendances [day] (map set-status (p/list-attendances conn day)))
 
-(defn list-attendants [] (p/list-attendants conn))
-
 (defn list-attendances-days [] (map :day (p/list-attendances-days conn)))
 
 (defn get-attendant [id]

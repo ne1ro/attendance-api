@@ -2,7 +2,6 @@
 
 (defprotocol Persistence
   "Abstraction for attendance persistence operations"
-  (list-attendants [this] "Returns list of attendants")
   (get-attendant [this id] "Returns attendant by ID or nil")
   (create-attendant [this attendant-form] "Creates attendant")
   (delete-attendant [this id] "Deletes attendant by ID")

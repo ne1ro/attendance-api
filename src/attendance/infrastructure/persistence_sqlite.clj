@@ -21,9 +21,6 @@
 (defrecord PersistenceSQLite [conn]
   Persistence
 
-  (list-attendants [conn]
-    (-> (select :*) (from :attendants) (order-by [:last-name :asc]) (query conn)))
-
   (get-attendant [conn id]
     (->
      (select :attendants.* :attendancies.day)
