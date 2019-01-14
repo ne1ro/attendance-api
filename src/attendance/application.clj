@@ -11,10 +11,11 @@
   (->PersistenceSQLite {:classname "org.sqlite.JDBC" :subprotocol "sqlite" :subname "attendance.db"}))
 
 (defn- set-status [attendance]
-  (assoc :attendance :status (case (:status attendance)
-                              1 "attended"
-                              0 "excused"
-                              "unattended")))
+  (let [status (case (:status attendance)
+                        1 "attended"
+                        0 "excused"
+                        "unattended")]
+  (assoc attendance :status status)))
 
 (defn- calc-percentage [calc overall] (-> calc (/ overall) (* 100.0)))
 
