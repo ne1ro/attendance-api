@@ -3,6 +3,7 @@
   (:require
    [attendance.application.persistence :refer [Persistence]]
    [camel-snake-kebab.core :refer :all]
+   [camel-snake-kebab.extras :refer [transform-keys]]
    [clojure.java.jdbc :as jdbc]
    [clojure.string :as str]
    [honeysql.core :as sql]
@@ -14,9 +15,9 @@
 (defn- delete! [conn table id]
   (jdbc/delete! (:conn conn) table ["id = ?" id]))
 
-(defn- insert! [conn table data]
+(defn- insert! [{conn :conn} table data]
   "Inserts data and returns ID"
-  (-> conn :conn (jdbc/insert! table data :row-fn ->kebab-case-keyword) first vals first))
+  (-> conn (jdbc/insert! table (transform-keys ->snake_case_keyword data)) first vals first))
 
 (defrecord PersistenceSQLite [conn]
   Persistence
