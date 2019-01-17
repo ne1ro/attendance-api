@@ -1,11 +1,20 @@
-# attendance-api
+# Attendance API
 
-API to create attendants and attendances build in Clojure.
+API to create attendants and attendances built in Clojure.
 
 ## Usage
 
 ```clojure
-lein install && lein ring server 3000
+lein install && lein repl
+```
+
+## Development
+
+### Start local development server
+
+When in REPL:
+```
+(use 'ring.adapter.jetty)(run-jetty app {:port 3000})
 ```
 
 ## License

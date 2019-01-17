@@ -11,10 +11,11 @@
   (->PersistenceSQLite {:classname "org.sqlite.JDBC" :subprotocol "sqlite" :subname "attendance.db"}))
 
 (defn- set-status [attendance]
-  (let [status (case (:status attendance)
-                        1 "attended"
-                        0 "excused"
-                        "unattended")]
+  (let [st (attendance :attendance)
+       status (case st
+               1 "attended"
+               0 "excused"
+               "unattended")]
   (assoc attendance :status status)))
 
 (defn- calc-percentage [calc overall] (-> calc (/ overall) (* 100.0)))
@@ -32,18 +33,16 @@
 
 (defn get-attendant [id]
   (let [attendant (p/get-attendant conn id)
-        ; attendances (->> attendant :id (list-attendances-by-attendant conn))
+        attendances (->> attendant :id (p/list-attendances-by-attendant conn))
         days-count (comp list-attendances-days count)]
-    (assoc attendant :attendancePercentage (calc-percentage 0 days-count))))
-    ; (assoc attendant :attendancePercentage (calc-percentage (count attendances) days-count))))
+    (assoc attendant :attendancePercentage (calc-percentage (count attendances) days-count))))
 
 (defn delete-attendant [id]
   (let [attendant (get-attendant conn id)] (p/delete-attendant conn id) attendant))
 
 (defn attend [attendant-id attendance-form]
   (let [attendance (assoc attendance-form :attendant-id attendant-id)]
-    (assoc attendance :id
-           (-> attendance domain/attend (p/create-attendance conn)))))
+    (assoc attendance :id (->> attendance domain/attend (p/create-attendance conn)))))
 
 (defn unattend [attendant-id day]
   (let [attendance (p/get-attendance-by-day conn attendant-id day)]
