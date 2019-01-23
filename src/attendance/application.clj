@@ -32,9 +32,13 @@
 
 (defn get-attendant [id]
   (let [attendant (p/get-attendant conn id)
-        attendances (->> attendant :id (p/list-attendances-by-attendant conn))
-        days-count (comp list-attendances-days count)]
-    (assoc attendant :attendancePercentage (calc-percentage (count attendances) days-count))))
+        attendances-count (->> attendant :id (p/list-attendances-by-attendant conn) count)
+        days-count (count (p/list-attendances-days conn))]
+    (if attendant
+      (assoc attendant
+             :attendance-percentage (calc-percentage attendances-count days-count)
+             :attendances-count attendances-count
+             :days-count days-count))))
 
 (defn delete-attendant [id]
   (let [attendant (p/get-attendant conn id)] (p/delete-attendant conn id) attendant))
