@@ -19,8 +19,8 @@
                  [prismatic/schema "1.1.9"]]
   :ring {:handler attendance.core/app :nrepl {:start? true :port 9998}}
   :uberjar-name "attendance.jar"
-  :plugins [[lein-environ "1.1.0"]]
   :middleware [whidbey.plugin/repl-pprint]
+  :plugins [[lein-environ "1.1.0"] [lein-kibit "0.1.6"] [mvxcvi/whidbey "2.0.0"] [jonase/eastwood "0.3.4"]]
   :main attendance.core
   :aot [attendance.core]
   :repl-options {:init-ns attendance.core

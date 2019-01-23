@@ -10,13 +10,12 @@
 (def conn
   (->PersistenceSQLite {:classname "org.sqlite.JDBC" :subprotocol "sqlite" :subname "attendance.db"}))
 
-(defn- set-status [attendance]
-  (let [st (attendance :attendance)
-       status (case st
+(defn- set-status [{status :status :as item}]
+  (let [str-status (case status
                1 "attended"
                0 "excused"
                "unattended")]
-  (assoc attendance :status status)))
+  (assoc item :status str-status)))
 
 (defn- calc-percentage [calc overall] (-> calc (/ overall) (* 100.0)))
 

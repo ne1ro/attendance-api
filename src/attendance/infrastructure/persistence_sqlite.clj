@@ -16,7 +16,6 @@
   (jdbc/delete! (:conn conn) table ["id = ?" id]))
 
 (defn- insert! [{conn :conn} table data]
-  "Inserts data and returns ID"
   (-> conn (jdbc/insert! table (transform-keys ->snake_case_keyword data)) first vals first))
 
 (defrecord PersistenceSQLite [conn]

@@ -1,5 +1,6 @@
 (ns attendance.core
   (:require [compojure.api.sweet :refer :all]
+            [compojure.api.api]
             [attendance.application :as application]
             [camel-snake-kebab.core :refer :all]
             [schema.core :as s]
