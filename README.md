@@ -2,6 +2,8 @@
 
 API to create attendants and attendances built in Clojure.
 
+[![Build Status](https://travis-ci.org/ne1ro/attendance-api.svg?branch=master)](https://travis-ci.org/ne1ro/attendance-api)
+
 ## Usage
 
 ```clojure
@@ -16,6 +18,10 @@ When in REPL:
 ```
 (use 'ring.adapter.jetty)(run-jetty app {:port 3000})
 ```
+
+## Configuration
+
+Use `profiles.clj` in development and ENV variables in prod.
 
 ## License
 
