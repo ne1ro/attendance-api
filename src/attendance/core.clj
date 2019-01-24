@@ -4,6 +4,7 @@
             [attendance.application :as application]
             [camel-snake-kebab.core :refer :all]
             [schema.core :as s]
+            [ring.logger :as logger]
             [ring.util.http-response :refer :all]))
 
 ; TODO: replace with clojure.spec?
@@ -14,7 +15,7 @@
 
 (defn- key-clj->json [x] (->camelCase (if (keyword? x) (name x) x)))
 
-(def app
+(def clean-app
   (api
      {:format {:formats [:json]
             :params-opts {:json {:key-fn key-json->clj}}
@@ -48,3 +49,5 @@
    (DELETE "/attendants/:attendant-id/attendances/:day" []
      :path-params [attendant-id :- s/Int day :- s/Str]
      (ok (application/unattend attendant-id day)))))
+
+(def app (logger/wrap-with-logger clean-app))

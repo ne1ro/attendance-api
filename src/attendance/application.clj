@@ -17,7 +17,8 @@
                "unattended")]
   (assoc item :status str-status)))
 
-(defn- calc-percentage [calc overall] (-> calc (/ overall) (* 100.0)))
+(defn- calc-percentage [calc overall]
+  (if (pos? overall) (-> calc (/ overall) (* 100.0)) 0))
 
 (defn create-attendant [attendant-form]
   (->>
