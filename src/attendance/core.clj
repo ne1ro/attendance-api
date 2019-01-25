@@ -17,44 +17,51 @@
 
 (def clean-app
   (api
-    {:format {:formats       [:json]
-              :params-opts   {:json {:key-fn key-json->clj}}
-              :response-opts {:json {:key-fn key-clj->json}}}}
+   {:format {:formats       [:json]
+             :params-opts   {:json {:key-fn key-json->clj}}
+             :response-opts {:json {:key-fn key-clj->json}}}}
 
-    (GET "/attendants/:id" []
+   (GET "/attendants/:id" []
      :path-params [id :- s/Int]
      (ok (application/get-attendant id)))
 
-    (POST "/attendants" []
+   (POST "/attendants" []
      :body [attendant-form Attendant]
      (created "/attendants" (application/create-attendant attendant-form)))
 
-    (DELETE "/attendants/:id" []
+   (DELETE "/attendants/:id" []
      :path-params [id :- s/Int]
      (ok (application/delete-attendant id)))
 
-    (GET "/attendances_days" []
+   (GET "/attendances_days" []
      (ok (application/list-attendances-days)))
 
-    (GET "/attendances/:day" []
+   (GET "/attendances/:day" []
      :path-params [day :- s/Str]
      (ok (application/list-attendances day)))
 
-    (POST "/attendants/:attendant-id/attendances" []
+   (POST "/attendants/:attendant-id/attendances" []
      :path-params [attendant-id :- s/Int]
      :body [attendance-form Attendance]
      (created "/attendants/:id/attendances"
               (application/attend attendant-id attendance-form)))
 
-    (DELETE "/attendants/:attendant-id/attendances/:day" []
+   (DELETE "/attendants/:attendant-id/attendances/:day" []
      :path-params [attendant-id :- s/Int day :- s/Str]
      (ok (application/unattend attendant-id day)))))
 
-(defn- render-auth-err [response] (assoc response :status 401))
+(defn- render-auth-err [response] (assoc response :status 401 :body nil))
+
+(defn- authenticated? [headers] (-> headers (get "x-auth-token") application/token-exists?))
 
 (defn wrap-auth [handler]
-  (fn ([request] (-> request handler render-auth-err))
-    ([{headers :headers :as request} respond raise]
+  (fn
+    ([request]
+     (if (-> request :headers authenticated?) (handler request) (-> request handler render-auth-err)))
+
+    ([request respond raise]
+     (if (-> request :headers authenticated?)
+       (handler request #(respond %) raise))
      (handler request (comp render-auth-err respond) (raise (Exception. "Unauthenticated"))))))
 
 (def app (-> clean-app (wrap-auth) (logger/wrap-with-logger)))
