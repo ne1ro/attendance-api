@@ -50,4 +50,11 @@
      :path-params [attendant-id :- s/Int day :- s/Str]
      (ok (application/unattend attendant-id day)))))
 
-(def app (logger/wrap-with-logger clean-app))
+(defn- render-auth-err [response] (assoc response :status 401))
+
+(defn wrap-auth [handler]
+  (fn ([request] (-> request handler render-auth-err))
+    ([{headers :headers :as request} respond raise]
+     (handler request (comp render-auth-err respond) (raise (Exception. "Unauthenticated"))))))
+
+(def app (-> clean-app (wrap-auth) (logger/wrap-with-logger)))
