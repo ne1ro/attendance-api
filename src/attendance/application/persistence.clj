@@ -2,6 +2,7 @@
 
 (defprotocol Persistence
   "Abstraction for attendance persistence operations"
+  (token-exists? [this token] "Check if this token exists")
   (get-attendant [this id] "Returns attendant by ID or nil")
   (create-attendant [this attendant-form] "Creates attendant")
   (delete-attendant [this id] "Deletes attendant by ID")

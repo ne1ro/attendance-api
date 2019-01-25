@@ -1,13 +1,13 @@
 (ns attendance.infrastructure.persistence-sqlite
   (:refer-clojure :exclude [update])
   (:require
-   [attendance.application.persistence :refer [Persistence]]
-   [camel-snake-kebab.core :refer :all]
-   [camel-snake-kebab.extras :refer [transform-keys]]
-   [clojure.java.jdbc :as jdbc]
-   [clojure.string :as str]
-   [honeysql.core :as sql]
-   [honeysql.helpers :refer :all :as helpers]))
+    [attendance.application.persistence :refer [Persistence]]
+    [camel-snake-kebab.core :refer :all]
+    [camel-snake-kebab.extras :refer [transform-keys]]
+    [clojure.java.jdbc :as jdbc]
+    [clojure.string :as str]
+    [honeysql.core :as sql]
+    [honeysql.helpers :refer :all :as helpers]))
 
 (defn- query [q conn]
   (-> conn :conn (jdbc/query (sql/format q))))
@@ -21,14 +21,23 @@
 (defrecord PersistenceSQLite [conn]
   Persistence
 
+  (token-exists? [conn token]
+    (let [record (-> token
+                     (select :tokens.token)
+                     (from :tokens)
+                     (where [:= :tokens.token token])
+                     (limit 1)
+                     (query conn))]
+      (not (empty? record))))
+
   (get-attendant [conn id]
     (->
-     (select :attendants.* :attendancies.day)
-     (from :attendants)
-     (left-join :attendancies [:= :attendancies.attendant-id :attendants.id])
-     (where [:= :attendants.id id])
-     (query conn)
-     first))
+      (select :attendants.* :attendancies.day)
+      (from :attendants)
+      (left-join :attendancies [:= :attendancies.attendant-id :attendants.id])
+      (where [:= :attendants.id id])
+      (query conn)
+      first))
 
   (create-attendant [conn attendant-form] (insert! conn :attendants attendant-form))
 
@@ -36,38 +45,38 @@
 
   (list-attendances-days [conn]
     (->
-     (select :day)
-     (modifiers :distinct)
-     (from :attendancies)
-     (order-by [:day :desc])
-     (query conn)))
+      (select :day)
+      (modifiers :distinct)
+      (from :attendancies)
+      (order-by [:day :desc])
+      (query conn)))
 
   (list-attendances-by-attendant [conn id]
     (->
-     (select :*)
-     (from :attendancies)
-     (where [:and [:= :attendancies.attendant-id id] [:= :attendancies.status true]])
-     (query conn)))
+      (select :*)
+      (from :attendancies)
+      (where [:and [:= :attendancies.attendant-id id] [:= :attendancies.status true]])
+      (query conn)))
 
   (list-attendances [conn day]
     (->
-     (select :attendants.* :attendancies.status)
-     (from :attendants)
-     (left-join :attendancies
-                [:and
-                 [:= :attendancies.attendant-id :attendants.id]
-                 [:= :attendancies.day day]])
-     (order-by [:attendants.last-name :asc])
-     (query conn)))
+      (select :attendants.* :attendancies.status)
+      (from :attendants)
+      (left-join :attendancies
+                 [:and
+                  [:= :attendancies.attendant-id :attendants.id]
+                  [:= :attendancies.day day]])
+      (order-by [:attendants.last-name :asc])
+      (query conn)))
 
   (get-attendance-by-day [conn attendant-id day]
     (->
-     (select :*)
-     (from :attendancies)
-     (where [:= :attendancies.attendant-id attendant-id] [:= :attendancies.day day])
-     (limit 1)
-     (query conn)
-     first))
+      (select :*)
+      (from :attendancies)
+      (where [:= :attendancies.attendant-id attendant-id] [:= :attendancies.day day])
+      (limit 1)
+      (query conn)
+      first))
 
   (create-attendance [conn attendance-form] (insert! conn :attendancies attendance-form))
 

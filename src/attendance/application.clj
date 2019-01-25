@@ -12,13 +12,15 @@
 
 (defn- set-status [{status :status :as item}]
   (let [str-status (case status
-               1 "attended"
-               0 "excused"
-               "unattended")]
-  (assoc item :status str-status)))
+                     1 "attended"
+                     0 "excused"
+                     "unattended")]
+    (assoc item :status str-status)))
 
 (defn- calc-percentage [calc overall]
   (if (pos? overall) (-> calc (/ overall) (* 100.0)) 0))
+
+(def token-exists? (partial p/token-exists? conn))
 
 (defn create-attendant [attendant-form]
   (->>
