@@ -52,16 +52,19 @@
 
 (defn- render-auth-err [response] (assoc response :status 401 :body nil))
 
-(defn- authenticated? [headers] (-> headers (get "x-auth-token") application/token-exists?))
+(defn- authenticated? [{headers :headers}]
+  (-> headers (get "x-auth-token") (application/token-exists?)))
 
 (defn wrap-auth [handler]
   (fn
     ([request]
-     (if (-> request :headers authenticated?) (handler request) (-> request handler render-auth-err)))
+     (if (authenticated? request)
+       (handler request)
+       (-> request handler render-auth-err)))
 
     ([request respond raise]
-     (if (-> request :headers authenticated?)
+     (if (authenticated? request)
        (handler request #(respond %) raise))
-     (handler request (comp render-auth-err respond) (raise (Exception. "Unauthenticated"))))))
+       (handler request (comp render-auth-err respond) (raise (Exception. "Unauthenticated"))))))
 
 (def app (-> clean-app (wrap-auth) (logger/wrap-with-logger)))
