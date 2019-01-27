@@ -24,6 +24,7 @@
   :plugins [[lein-environ "1.1.0"] [lein-kibit "0.1.6"] [mvxcvi/whidbey "2.0.0"] [jonase/eastwood "0.3.4"]]
   :main attendance.core
   :aot [attendance.core]
+  :profiles {:uberjar {:aot :all :main attendance.server}}
   :repl-options {:init-ns attendance.core
                  :prompt  (fn [ns] (str "\u001B[35m[\u001B[34m" ns "\u001B[35m]\u001B[33mλ:\u001B[m "))
                  :welcome ()})
