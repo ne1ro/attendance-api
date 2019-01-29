@@ -17,4 +17,4 @@
   (is (thrown? Exception (save-attendant nil)))
   (is (thrown? Exception (save-attendant {})))
   (is (thrown? Exception (save-attendant {:first-name nil :last-name nil})))
-  (is (= (:first-name valid-attendant) (-> valid-attendant save-attendant :firstName))))
+  (is (= (:first-name valid-attendant) (-> valid-attendant save-attendant :first-name))))

@@ -21,7 +21,8 @@
   :ring {:handler attendance.core/app :nrepl {:start? true :port 9998}}
   :uberjar-name "attendance.jar"
   :middleware [whidbey.plugin/repl-pprint]
-  :plugins [[lein-environ "1.1.0"] [lein-kibit "0.1.6"] [mvxcvi/whidbey "2.0.0"] [jonase/eastwood "0.3.4"]]
+  :plugins [[lein-environ "1.1.0"] [lein-kibit "0.1.6"] [mvxcvi/whidbey "2.0.0"]
+            [jonase/eastwood "0.3.4"] [lein-cloverage "1.0.13"]]
   :main attendance.core
   :aot [attendance.core]
   :profiles {:uberjar {:aot :all :main attendance.server}}
