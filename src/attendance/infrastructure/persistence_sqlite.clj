@@ -28,7 +28,7 @@
                      (where [:= :tokens.token token])
                      (limit 1)
                      (query conn))]
-      (not (empty? record))))
+      (seq record)))
 
   (get-attendant [conn id]
     (->

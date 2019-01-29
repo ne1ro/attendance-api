@@ -64,7 +64,7 @@
 
     ([request respond raise]
      (if (authenticated? request)
-       (handler request #(respond %) raise))
+       (handler request respond raise))
        (handler request (comp render-auth-err respond) (raise (Exception. "Unauthenticated"))))))
 
 (def app (-> clean-app (wrap-auth) (logger/wrap-with-logger)))
