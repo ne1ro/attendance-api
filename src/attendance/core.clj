@@ -5,6 +5,7 @@
             [camel-snake-kebab.core :refer :all]
             [schema.core :as s]
             [ring.logger :as logger]
+            [clojure.spec.test.alpha :as stest]
             [ring.util.http-response :refer :all]))
 
 ; TODO: replace with clojure.spec?
