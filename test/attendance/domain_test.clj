@@ -4,7 +4,7 @@
   (:import (com.github.javafaker Faker)))
 
 (def faker (Faker.))
-(def valid-attendance {:day "2018-12-12" :status true :attendant-id 0})
+(def valid-attendance {:day "2018-12-12" :status true :attendant-id 1})
 (def valid-attendant
   {:first-name (-> faker .witcher .monster) :last-name (-> faker .witcher .school)})
 
