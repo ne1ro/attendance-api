@@ -3,6 +3,7 @@
 API to create attendants and attendances built in Clojure.
 
 [![Build Status](https://travis-ci.org/ne1ro/attendance-api.svg?branch=master)](https://travis-ci.org/ne1ro/attendance-api)
+[![Coverage Status](https://coveralls.io/repos/github/ne1ro/attendance-api/badge.svg)](https://coveralls.io/github/ne1ro/attendance-api)
 
 ## Usage
 

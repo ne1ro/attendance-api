@@ -1,6 +1,6 @@
 language: clojure
 lein: lein
-script: lein do check, kibit, eastwood, test, cloverage, uberjar
+script: lein do check, kibit, eastwood, test, cloverage --coveralls --junit, uberjar
 jdk:
   - openjdk11
 cache:
