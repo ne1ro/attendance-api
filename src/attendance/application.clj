@@ -1,10 +1,14 @@
 (ns attendance.application
   (:require
+   [clojure.spec.alpha :as s]
+   [clojure.spec.test.alpha :as stest]
    [environ.core :refer [env]]
    [attendance.domain :as domain]
    [attendance.application.persistence :as p]
    [camel-snake-kebab.core :refer :all]
    [attendance.infrastructure.persistence-sqlite :refer [->PersistenceSQLite]]))
+
+(s/def ::id (s/and int? pos?))
 
 ; (env :db-name)
 (def conn
@@ -21,6 +25,7 @@
   (if (pos? overall) (-> calc (/ overall) (* 100.0)) 0))
 
 (def token-exists? (partial p/token-exists? conn))
+(s/fdef token-exists? :args (s/cat :id ::id) :ret [::status])
 
 (defn create-attendant [attendant-form]
   (->>
@@ -53,3 +58,5 @@
 (defn unattend [attendant-id day]
   (let [attendance (p/get-attendance-by-day conn attendant-id day)]
     (p/delete-attendance conn attendance) attendance))
+
+(stest/instrument `token-exists?)
