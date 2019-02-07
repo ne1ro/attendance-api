@@ -8,7 +8,7 @@
    [camel-snake-kebab.core :refer :all]
    [attendance.infrastructure.persistence-sqlite :refer [->PersistenceSQLite]]))
 
-(s/def ::id (s/and int? pos?))
+(s/def ::token string?)
 
 ; (env :db-name)
 (def conn
@@ -25,7 +25,7 @@
   (if (pos? overall) (-> calc (/ overall) (* 100.0)) 0))
 
 (def token-exists? (partial p/token-exists? conn))
-(s/fdef token-exists? :args (s/cat :id ::id) :ret [::status])
+(s/fdef token-exists? :args (s/cat :token ::token) :ret [::status])
 
 (defn create-attendant [attendant-form]
   (->>

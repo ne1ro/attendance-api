@@ -4,7 +4,7 @@
 (defrecord PersistenceTest [conn]
   Persistence
 
-  (token-exists? [_conn token] (when token true))
+  (token-exists? [_conn token] (when (= "test" token) true))
 
   (get-attendant [_conn id] {:id id :first-name "Test" :last-name "User"})
 

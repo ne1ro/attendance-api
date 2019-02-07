@@ -5,6 +5,6 @@
 (def faker (Faker.))
 
 (deftest token-exists?-test
-  (is (thrown-with-msg? Exception #error (token-exists? nil)))
-  (is (thrown? Exception (token-exists? "")))
-  (is (token-exists? 1)))
+  (is (thrown? Exception (token-exists? nil)))
+  (is (thrown? Exception (token-exists? 0)))
+  (is (token-exists? "test")))
