@@ -14,9 +14,9 @@
 (s/def ::attendance (s/keys :req-un [::day ::attendant-id] :opt-un [::status]))
 
 (defn save-attendant [attendant-form] attendant-form)
-(defn attend [attendance-form] attendance-form)
-
 (s/fdef save-attendant :args (s/cat :attendant-form ::attendant) :ret [::attendant])
+
+(defn attend [attendance-form] attendance-form)
 (s/fdef attend :args (s/cat :attendance-form ::attendance) :ret [::attendance])
-(stest/instrument `save-attendant)
-(stest/instrument `attend)
+
+(stest/instrument [`save-attendant `attend])

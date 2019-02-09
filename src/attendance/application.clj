@@ -33,6 +33,7 @@
    domain/save-attendant
    (p/create-attendant conn)
    (assoc attendant-form :id)))
+(s/fdef create-attendant :args [::attendant] :ret [::attendant])
 
 (defn list-attendances [day] (map set-status (p/list-attendances conn day)))
 
@@ -59,4 +60,4 @@
   (let [attendance (p/get-attendance-by-day conn attendant-id day)]
     (p/delete-attendance conn attendance) attendance))
 
-(stest/instrument `token-exists?)
+(stest/instrument [`token-exists? `create-attendant])
