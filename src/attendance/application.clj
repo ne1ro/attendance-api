@@ -36,8 +36,10 @@
 (s/fdef create-attendant :args [::attendant] :ret [::attendant])
 
 (defn list-attendances [day] (map set-status (p/list-attendances conn day)))
+(s/fdef create-attendant :args [::day] :ret [(s/coll-of :attendance)])
 
 (defn list-attendances-days [] (map :day (p/list-attendances-days conn)))
+(s/fdef list-attendances-days :args [] :ret [(s/coll-of :day)])
 
 (defn get-attendant [id]
   (let [attendant (p/get-attendant conn id)
