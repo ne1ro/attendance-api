@@ -1,7 +1,6 @@
 (ns attendance.application-test
   (:require [clojure.test :refer :all]
-            [attendance.application :refer :all]
-            [attendance.infrastructure.persistence-test [:refer ->PersistenceTest]])
+            [attendance.application :refer :all])
   (:import (com.github.javafaker Faker)))
 
 (def faker (Faker.))
