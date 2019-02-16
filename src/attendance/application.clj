@@ -50,6 +50,7 @@
              :attendance-percentage (calc-percentage attendances-count days-count)
              :attendances-count attendances-count
              :days-count days-count))))
+(s/fdef get-attendant :args [::attendant-id] :ret [:attendant])
 
 (defn delete-attendant [id]
   (let [attendant (p/get-attendant conn id)] (p/delete-attendant conn id) attendant))
@@ -62,4 +63,4 @@
   (let [attendance (p/get-attendance-by-day conn attendant-id day)]
     (p/delete-attendance conn attendance) attendance))
 
-(stest/instrument [`token-exists? `create-attendant])
+(stest/instrument [`token-exists? `create-attendant `get-attendant])
