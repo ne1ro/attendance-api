@@ -11,4 +11,5 @@
   (with-redefs [->PersistenceSQLite ->PersistenceTest]
     (is (thrown? Exception (token-exists? nil)))
     (is (thrown? Exception (token-exists? 0)))
+    (is (thrown? Exception (token-exists? "")))
     (is (token-exists? "test"))))
